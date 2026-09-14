@@ -1,0 +1,116 @@
+body {
+  background: #fff;
+  font-family: sans-serif;
+  padding: 10px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+
+#date-title {
+  font-size: 1.4em;
+  margin-bottom: 5px;
+}
+
+#wareki {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  height: 180px;
+  font-size: 1.1em;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  font-size: 1.1em;
+  background: #0078d4;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+}
+
+#past-container {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 横に3つ並べる */
+  gap: 10px; /* カードの間隔 */
+}
+
+.past-card {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 15px;
+  background: #fafafa;
+
+  width: 100%;          /* ← グリッド幅に合わせる */
+  box-sizing: border-box;
+  min-height: 120px;    /* ← 高さ揃え（任意） */
+}
+
+.past-year {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.past-preview {
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.view-full-btn {
+  padding: 8px 12px;
+  background: #555;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+}
+
+.nav-buttons {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* 前日・翌日ボタンを横並びにする */
+.prev-next {
+  display: flex;
+  gap: 10px;
+}
+
+#prev-btn, #next-btn {
+  flex: 1;
+}
+
+#prev-btn, #next-btn, #back-btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+}
+
+#prev-btn {
+  background: #6a9cff;
+}
+
+#next-btn {
+  background: #6a9cff;
+}
+
+#back-btn {
+  background: #888;
+}

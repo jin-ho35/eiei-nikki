@@ -1,0 +1,237 @@
+body {
+  background: #fff;
+  font-family: sans-serif;
+  padding: 10px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.month-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 20px 0 10px;
+}
+
+.day-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.day-item {
+  width: calc(100% / 7 - 10px);  /* ★ 7列に必ず収まる幅 */
+  aspect-ratio: 1 / 1;           /* ★ 正方形で高さが自動調整 */
+  margin: 5px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.day-item:hover {
+  background: #f0f0f0;
+}
+.written {
+  background: #d0e7ff; /* 薄い青色 */
+  border-color: #7ab4ff;
+}
+
+/* 今月のタイトルを強調（太枠＋太字） */
+.current-month {
+  border: 2px solid #0078d4;
+  padding: 6px;
+  border-radius: 6px;
+  background: #eef6ff;
+}
+
+/* 今日の日付を赤文字で強調 */
+.today {
+  color: red;
+  font-weight: bold;
+  border: 2px solid red;
+  border-radius: 6px;
+}
+
+/* 今月全体のブロック（太枠＋薄黄色背景） */
+.current-month-block {
+  border: 3px solid #e6c200;   /* 濃いめの黄色の太枠 */
+  background: #fff9d6;         /* 薄黄色の背景 */
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* 今日の日付を赤文字で強調 */
+.today {
+  color: red;
+  font-weight: bold;
+  border: 2px solid red;
+  border-radius: 6px;
+}
+
+#month-select-btn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  font-size: 1.1em;
+  background: #888;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+}
+
+#month-select {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.month-item {
+  width: 120px;
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+  cursor: pointer;
+}
+
+.month-item:hover {
+  background: #f0f0f0;
+}
+
+#month-select {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.month-item {
+  width: 100%;            /* ← グリッド幅に合わせる（重要） */
+  box-sizing: border-box; /* ← 枠線や余白を含めて計算 */
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fafafa;
+  cursor: pointer;
+}
+
+.month-item:hover {
+  background: #f0f0f0;
+}
+#year-title {
+  text-align: center;
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* 当月以外の月ブロック（黒枠＋白背景） */
+.month-block {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+#year-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.year-arrow {
+  font-size: 1.4em;
+  cursor: pointer;
+  user-select: none;
+  padding: 5px 10px;
+}
+
+.year-arrow:hover {
+  background: #f0f0f0;
+  border-radius: 6px;
+}
+/* バックアップボタンを横並びにする */
+#backup-buttons {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 横に2つ並べる */
+  gap: 10px;
+}
+
+#backup-buttons button {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  font-size: 18px;
+
+  /* ★ここから色づけ */
+  background: #e6f3ff;      /* 薄い青（柔らかい水色） */
+  border: 1px solid #bcd9ff; /* 少し濃い青で枠線 */
+  color: #003366;            /* 文字は濃い青で読みやすく */
+  /* ★ここまで */
+
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* 初期化ボタンの配置 */
+#reset-area {
+  margin-top: 30px;        /* ★ バックアップボタンとの間隔 */
+  display: flex;
+  justify-content: center; /* ★ 中央揃え */
+}
+
+/* 初期化ボタンの見た目（危険操作なので控えめな赤） */
+#reset-btn {
+  padding: 12px 20px;
+  font-size: 18px;
+  background: #ffe5e5;
+  border: 1px solid #ffcccc;
+  color: #660000;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 200px;            /* ★ 中央揃え時の見やすい幅 */
+  box-sizing: border-box;
+}
+/* -------------------------
+   スマホ専用レイアウト調整
+-------------------------- */
+@media (max-width: 600px) {
+
+  .day-item {
+    width: calc(100% / 7 - 2px);  /* ★ スマホでも7列に収まる幅 */
+    aspect-ratio: 1 / 1;
+    font-size: min(3vw, 18px);
+    margin: 2px;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+
+  .day-row {
+    gap: 4px;
+  }
+}
+

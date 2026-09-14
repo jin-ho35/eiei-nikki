@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>永々日記</title>
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="top.css">
+<link rel="manifest" href="manifest.json">
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script>
+
+</head>
+<body>
+
+<div class="container">
+ <div id="year-nav">
+  <span id="prev-year" class="year-arrow">＜</span>
+  <h1 id="year-title"></h1>
+  <span id="next-year" class="year-arrow">＞</span>
+</div>
+<h1 id="month-title"></h1>
+<div id="day-list"></div>
+
+<div id="month-select"></div>
+ 
+<div id="backup-buttons">
+  <button id="export-btn">バックアップを作成</button>
+  <button id="import-btn">バックアップから復元</button>
+  <input type="file" id="import-file" style="display:none;">
+</div>
+
+<!-- ★ 初期化ボタン（中央揃え＋間隔あり） -->
+<div id="reset-area">
+  <button id="reset-btn">初期化する</button>
+</div>
+
+<script src="top.js"></script>
+
+<!-- ★ スマホではバックアップ機能を非表示にする -->
+<script>
+  const isMobile = /iPhone|Android.+Mobile/.test(navigator.userAgent);
+
+  if (isMobile) {
+    document.getElementById("export-btn").style.display = "none";
+    document.getElementById("import-btn").style.display = "none";
+  }
+</script>
+
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日記帳</title>
+<link rel="stylesheet" href="diary.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h1 id="date-title"></h1>
+  <div id="wareki"></div>
+
+  <textarea id="diary-text" placeholder="今日の日記を書いてください"></textarea>
+  <button id="save-btn">保存する</button>
+
+<div class="nav-buttons">
+
+  <div class="prev-next">
+    <button id="prev-btn">前日へ</button>
+    <button id="next-btn">翌日へ</button>
+  </div>
+
+  <button id="back-btn">カレンダーへ戻る</button>
+
+</div>
+
+  <h2>過去の同じ日の日記</h2>
+  <div id="past-container"></div>
+
+</div>
+
+<script src="diary.js"></script>
+</body>
+</html>
