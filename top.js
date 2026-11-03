@@ -38,6 +38,28 @@ if (currentYear === today.getFullYear() && m === today.getMonth() + 1) {
   const row = document.createElement("div");
   row.className = "day-row";
 
+// 曜日見出しを作成
+const weekdayRow = document.createElement("div");
+weekdayRow.className = "weekday-row";
+
+const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+
+weekdays.forEach((day, index) => {
+  const weekday = document.createElement("div");
+  weekday.className = "weekday-item";
+  weekday.textContent = day;
+
+  if (index === 0) {
+    weekday.classList.add("sunday");
+  } else if (index === 6) {
+    weekday.classList.add("saturday");
+  }
+
+  weekdayRow.appendChild(weekday);
+});
+
+monthBlock.appendChild(weekdayRow);
+
   for (let d = 1; d <= 31; d++) {
     const date = new Date(currentYear, m - 1, d);
     if (date.getMonth() + 1 !== m) continue;
@@ -49,6 +71,17 @@ if (currentYear === today.getFullYear() && m === today.getMonth() + 1) {
     const item = document.createElement("div");
     item.className = "day-item";
     item.textContent = `${d}日`;
+
+// 月初の曜日分だけ空白を作る
+if (d === 1) {
+  const firstDay = date.getDay();
+
+  for (let i = 0; i < firstDay; i++) {
+    const blank = document.createElement("div");
+    blank.className = "day-item empty";
+    row.appendChild(blank);
+  }
+}
 
     // 今日判定
     if (m === today.getMonth() + 1 && d === today.getDate()) {
@@ -93,26 +126,61 @@ function updateYearAndCalendar() {
 
 createMonthSelect();
 showMonth(currentMonth);
-// USB内のフォルダに直接バックアップを保存する
-document.getElementById("export-btn").onclick = async () => {
-  try {
-    const dirHandle = await window.showDirectoryPicker();
 
-    const allData = {};
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      const value = localStorage.getItem(key);
-      allData[key] = value;
+// バックアップを作成する
+document.getElementById("export-btn").onclick = async () => {
+
+  const allData = {};
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    allData[key] = localStorage.getItem(key);
+  }
+
+  const backupData = JSON.stringify(allData, null, 2);
+
+  // PC：フォルダを選択して保存
+  if ("showDirectoryPicker" in window) {
+    try {
+      const dirHandle = await window.showDirectoryPicker();
+
+      const fileHandle = await dirHandle.getFileHandle(
+        "diary-backup.json",
+        { create: true }
+      );
+
+      const writable = await fileHandle.createWritable();
+      await writable.write(backupData);
+      await writable.close();
+
+      alert("バックアップを保存しました");
+
+    } catch (e) {
+      if (e.name === "AbortError") {
+        alert("保存をキャンセルしました");
+      } else {
+        alert("保存に失敗しました：" + e.message);
+      }
     }
 
-    const fileHandle = await dirHandle.getFileHandle("diary-backup.json", { create: true });
-    const writable = await fileHandle.createWritable();
-    await writable.write(JSON.stringify(allData, null, 2));
-    await writable.close();
+  } else {
 
-    alert("USB内のフォルダにバックアップを保存しました");
-  } catch (e) {
-    alert("保存がキャンセルされました");
+    // スマホ：ファイルとしてダウンロード
+    const blob = new Blob(
+      [backupData],
+      { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download = "diary-backup.json";
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+    alert("バックアップファイルを作成しました。保存先を確認してください");
   }
 };
 
