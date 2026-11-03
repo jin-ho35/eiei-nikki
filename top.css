@@ -21,15 +21,15 @@ h1 {
 }
 
 .day-row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
   margin-bottom: 10px;
 }
 
 .day-item {
-  width: calc(100% / 7 - 10px);  /* ★ 7列に必ず収まる幅 */
-  aspect-ratio: 1 / 1;           /* ★ 正方形で高さが自動調整 */
-  margin: 5px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border: 1px solid #ccc;
   border-radius: 6px;
   background: #fafafa;
@@ -38,8 +38,39 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+
   padding: 0;
   box-sizing: border-box;
+}
+
+/* 曜日見出し */
+.weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.weekday-item {
+  text-align: center;
+  font-weight: bold;
+  padding: 8px 0;
+  background: #eee;
+  border-radius: 5px;
+}
+
+.weekday-item.sunday {
+  color: #d33;
+}
+
+.weekday-item.saturday {
+  color: #2674c8;
+}
+
+/* 月初の空白 */
+.day-item.empty {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .day-item:hover {
@@ -212,26 +243,21 @@ h1 {
   width: 200px;            /* ★ 中央揃え時の見やすい幅 */
   box-sizing: border-box;
 }
-/* -------------------------
-   スマホ専用レイアウト調整
--------------------------- */
+
+/* スマホ表示調整 */
 @media (max-width: 600px) {
 
   .day-item {
-    width: calc(100% / 7 - 2px);  /* ★ スマホでも7列に収まる幅 */
-    aspect-ratio: 1 / 1;
-    font-size: min(3vw, 18px);
-    margin: 2px;
-    box-sizing: border-box;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+    font-size: 14px;
   }
 
-  .day-row {
-    gap: 4px;
+  .weekday-item {
+    font-size: 13px;
+    padding: 6px 0;
+  }
+
+  .month-block,
+  .current-month-block {
+    padding: 6px;
   }
 }
-
