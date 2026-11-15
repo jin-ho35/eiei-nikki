@@ -113,6 +113,32 @@ document.getElementById("prev-year").onclick = () => {
   updateYearAndCalendar();
 };
 
+// 前月へ移動
+document.getElementById("prev-month").onclick = () => {
+
+  if (currentMonth === 1) {
+    currentMonth = 12;
+    currentYear--;
+  } else {
+    currentMonth--;
+  }
+
+  updateYearAndCalendar();
+};
+
+// 次月へ移動
+document.getElementById("next-month").onclick = () => {
+
+  if (currentMonth === 12) {
+    currentMonth = 1;
+    currentYear++;
+  } else {
+    currentMonth++;
+  }
+
+  updateYearAndCalendar();
+};
+
 document.getElementById("next-year").onclick = () => {
   currentYear++;
   updateYearAndCalendar();
@@ -231,3 +257,141 @@ document.getElementById("reset-btn").onclick = () => {
   location.reload();
 };
 
+// ===============================
+// 日記検索
+// ===============================
+
+const searchInput = document.getElementById("search-input");
+const searchBtn = document.getElementById("search-btn");
+const searchResults = document.getElementById("search-results");
+
+searchBtn.onclick = searchDiaries;
+
+searchInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    searchDiaries();
+  }
+});
+
+function searchDiaries() {
+
+  const keyword = searchInput.value.trim();
+
+  searchResults.innerHTML = "";
+
+  if (keyword === "") {
+    return;
+  }
+
+  const results = [];
+
+  // localStorage内の日記をすべて調べる
+  for (let i = 0; i < localStorage.length; i++) {
+
+    const key = localStorage.key(i);
+
+    // 日記データ（YYYY-MM-DD）のみ対象
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(key)) {
+      continue;
+    }
+
+    const diaryText = localStorage.getItem(key);
+
+    if (!diaryText) {
+      continue;
+    }
+
+    // キーワードが含まれているか確認
+    if (diaryText.includes(keyword)) {
+      results.push({
+        key: key,
+        text: diaryText
+      });
+    }
+  }
+
+  // 日付の新しい順に並べる
+  results.sort((a, b) => b.key.localeCompare(a.key));
+
+  // 件数表示
+  const count = document.createElement("div");
+  count.className = "search-count";
+  count.textContent = `検索結果：${results.length}件`;
+
+  searchResults.appendChild(count);
+
+  // 結果がない場合
+  if (results.length === 0) {
+
+    const noResult = document.createElement("div");
+    noResult.className = "no-search-result";
+    noResult.textContent = "該当する日記はありません";
+
+    searchResults.appendChild(noResult);
+
+    return;
+  }
+
+  // 検索結果カードを作成
+  results.forEach(result => {
+
+    const card = document.createElement("div");
+    card.className = "search-card";
+
+    const date = result.key.replace(/-/g, "/");
+
+    const preview = result.text
+      .replace(/\s+/g, " ")
+      .trim();
+
+    card.innerHTML = `
+      <div class="search-date">${date}</div>
+      <div class="search-preview">${preview}</div>
+      <button class="search-open-btn">全文</button>
+    `;
+
+  // 「全文」ボタンで全文表示・閉じるを切り替え
+const openBtn = card.querySelector(".search-open-btn");
+
+openBtn.onclick = (event) => {
+  event.stopPropagation();
+
+  const currentText = card.querySelector(".search-preview");
+
+  // 現在「プレビュー」なら全文を表示
+  if (currentText) {
+
+    const fullText = document.createElement("div");
+    fullText.className = "search-full-text";
+    fullText.textContent = result.text;
+
+    currentText.replaceWith(fullText);
+
+    openBtn.textContent = "閉じる";
+
+  } else {
+
+    // 現在「全文」ならプレビューに戻す
+    const fullText = card.querySelector(".search-full-text");
+
+    const preview = document.createElement("div");
+    preview.className = "search-preview";
+
+    preview.textContent = result.text
+      .replace(/\s+/g, " ")
+      .trim();
+
+    fullText.replaceWith(preview);
+
+    openBtn.textContent = "全文";
+  }
+};
+
+// カード自体をタップしても全文を開閉
+card.onclick = () => {
+  openBtn.click();
+};
+
+    searchResults.appendChild(card);
+  });
+}
