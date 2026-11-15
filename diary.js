@@ -33,8 +33,12 @@ function toWareki(y) {
 }
 
 // タイトル表示
+const diaryDate = new Date(year, Number(targetMonth) - 1, Number(targetDay));
+
+const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+
 document.getElementById("date-title").textContent =
-  `${year}年${targetMonth}月${targetDay}日`;
+  `${year}年${targetMonth}月${targetDay}日（${weekdays[diaryDate.getDay()]}）`;
 document.getElementById("wareki").textContent = toWareki(year);
 
 // 今日の日記を読み込む
@@ -65,7 +69,7 @@ for (let y = maxYear; y >= 2000; y--) {
     card.innerHTML = `
       <div class="past-year">${y}年（${toWareki(y)}）</div>
       <div class="past-preview">${preview}...</div>
-      <button class="view-full-btn" data-key="${key}">全文を見る</button>
+      <button class="view-full-btn" data-key="${key}">全文</button>
     `;
 
     pastContainer.appendChild(card);
