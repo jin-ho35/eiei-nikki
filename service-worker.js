@@ -1,4 +1,4 @@
-const CACHE_NAME = "eien-nikki-cache-v4";
+const CACHE_NAME = "eien-nikki-cache-v5";
 
 const urlsToCache = [
   "./",
